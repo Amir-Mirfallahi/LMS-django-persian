@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .container {
+            margin-top: 20px;
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            width: 500px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #ecf0f3;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        button:hover {
+            box-shadow: none;   
+        }
+        h3 {
+            text-align: center;
+        }
+        .homework_field {
+            width: 150px;
+        }
+    </style>
+    {% if homeworks %}
+        <div class="container">
+            <h3>تکالیف</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>نام درس</th>
+                        <th>تکلیف</th>
+                        <th>تاریخ تحویل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for homework in homeworks %}
+                        <td>{{ homework.subject }}</td>
+                        <td class="homework_field">{{ homework.homework }}</td>
+                        <td>{{ homework.check_date }}</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="container">
+            <p>هیچ تکلیفی برای کلاس شما تایین نشده است</p>
+        </div>
+    {% endif %}
+{% endblock %}

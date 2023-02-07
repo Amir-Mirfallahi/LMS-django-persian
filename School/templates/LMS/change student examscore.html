@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .container_green {
+            margin-top: 20px;
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            width: 350px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #9cf7af;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        
+        label, input, button {
+            font-family: Vazirmatn;
+            width: 100%;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        label {
+            margin-bottom: 4px;
+            
+        }
+
+        label:nth-of-type(2) {
+            margin-top: 12px;
+        }
+
+        input::placeholder {
+            color: gray;
+        }
+
+        input {
+            direction: ltr;
+            background: #ecf0f3;
+            padding: 10px;
+            padding-left: 20px;
+            height: 50px;
+            font-size: 14px;
+            border-radius: 50px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+    </style>
+    <div class="container_green">
+        <form action="" method="post"> {% csrf_token %}
+            <label>شماره امتحان: {{ exam_id }}</label><br>
+            <label>شماره دانش آموز: {{ student_id }}</label><br>
+            <label>نمره: </label>
+            <input type="text" name="score" value="{{ last_score }}"><br>
+            <button type="submit">ثبت</button>
+        </form>
+    </div>
+{% endblock %}

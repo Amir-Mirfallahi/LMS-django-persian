@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .container {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 20px;
+            width: 30%;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #acbbff;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        button {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        textarea {
+            resize: none;
+            width: 300px;
+            font-family: Vazirmatn;
+            background-color: #fffde7;
+            padding: 10px;
+            border-radius: 50px;
+            border-top-right-radius: 0%;
+            padding-left: 20px;
+            font-size: 14px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+    </style>
+    <div class="container">
+        <h3>شماره اعلامیه: {{ id }}</h3><br>
+        <form action="" method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">ثبت</button>
+        </form>
+    </div>
+{% endblock %}

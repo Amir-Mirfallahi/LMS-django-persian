@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .container {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 20px;
+            width: 600px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #ffb6c1;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .container_tickets {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 20px;
+            width: 50%;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #b6ffb9;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .tickets {
+            display: inline-flex;
+            margin-top: 2%;
+            width: 96%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #f8ffb6;
+            position: relative;
+            border-radius: 20px;
+            box-sizing: border-box;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        textarea {
+            font-family: Vazirmatn;
+            background-color: #fffde7;
+            padding: 10px;
+            border-radius: 50px;
+            border-top-right-radius: 0%;
+            padding-left: 20px;
+            font-size: 14px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+            resize: none;
+        }
+        button {
+            width: 60%;
+        }
+        table, tr {
+            border-radius: 20px;
+        }
+    </style>
+
+    <div class="container">
+        <h3>ساخت تیکت</h3>
+        <form action="" method="post">{% csrf_token %}
+            <label>برای: </label>
+            <select name="for">
+                <option value="" selected disabled>انتخاب کنید</option>
+                <option value="support">پشتیبانی</option>
+                {% if role == "Student" %}
+                    {% for teacher in teachers %}
+                        <option value="{{ teacher.user.last_name }}">آقای {{ teacher.user.last_name }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+            <br>
+            <label>پیام: </label><br>
+            <textarea name="message" cols="60" rows="8"></textarea><br>
+            <center><button type="submit">ثبت</button></center>
+        </form>
+    </div>
+    <div class="container_tickets">
+        <h3>پشتیبانی</h3>
+        <div class="tickets">
+            <table>
+                <thead>
+                    <tr>
+                        <th>شماره</th>
+                        <th>پیام</th>
+                        <th>وضعیت</th>
+                        <th>پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in support_tickets %}
+                        <tr>
+                            <td>{{ ticket.id }}</td>
+                            <td>{{ ticket.message }}</td>
+                            {% if ticket.status %}
+                                <td>پاسخ داده شده</td>
+                            {% else %}
+                                <td>در انتظار</td>
+                            {% endif %}
+                            {% if ticket.reply %}
+                                <td>{{ ticket.reply }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if role == "Student" %}
+            <h3>شخصی</h3>
+            <div class="tickets">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>شماره</th>
+                            <th>برای</th>
+                            <th>پیام</th>
+                            <th>وضعیت</th>
+                            <th>پاسخ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in private_tickets %}
+                            <tr>
+                                <td>{{ ticket.id }}</td>
+                                <td>آقای {{ ticket.to_user.user.last_name }}</td>
+                                <td>{{ ticket.message }}</td>
+                                {% if ticket.status %}
+                                    <td>پاسخ داده شده</td>
+                                {% else %}
+                                    <td>در انتظار</td>
+                                {% endif %}
+                                {% if ticket.reply %}
+                                    <td>{{ ticket.reply }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        {% if role == "Teacher" %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>شماره</th>
+                        <th>از</th>
+                        <th>پیام</th>
+                        <th>وضعیت</th>
+                        <th>پاسخ</th>
+                        <th>اقدامات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in teacher_tickets %}
+                        <tr>
+                            <td>{{ ticket.id }}</td>
+                            <td>{{ ticket.from_user.first_name }} {{ ticket.from_user.last_name }}</td>
+                            <td>{{ ticket.message }}</td>
+                            {% if ticket.status %}
+                                <td>پاسخ داده شده</td>
+                            {% else %}
+                                <td>در انتظار</td>
+                            {% endif %}
+                            {% if ticket.reply %}
+                                <td>{{ ticket.reply }}</td>
+                        
+                            {% else %}
+                                <td>ثبت نشده است</td>
+                            {% endif %}
+                            {% if ticket.reply %}
+                                <td><a href="{{ ticket.id }}/answer">ویرایش</a></td>
+                            {% else %}
+                                <td><a href="{{ ticket.id }}/answer">پاسخ</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block navbar %}
+    <style>
+        header {
+            height: 32%;
+        }
+        .notifications {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            float: right;
+            width: 380px;
+            margin-top: 2%;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #72acd8;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        #notif {
+            margin-left: auto;
+            position: relative;
+            width: 300px;
+            margin-top: 2%;
+            height: auto;
+            border-radius: 20px;
+            padding: 20;
+            box-sizing: border-box;
+            background: #ffb6c1;
+        }
+        .notification-header {
+            color: white;
+        }
+    </style>
+        <nav>
+            <div class="navicon">
+            <div></div>
+            </div>
+            <a href="/">خانه</a>
+            {% if not user.is_authenticated %}
+                <a href="/login">ورود</a>
+            {% else %}
+                <a href="/account">حساب کاربری</a>
+            {% endif %}
+        </nav>
+{% endblock %}
+{% block second_navbar %}{% endblock %}
+{% block content %}
+    {% if notifications %}
+        <div class="notifications">
+            <h2 class="notification-header">اعلامیه ها</h2>
+            {% for notif in notifications %}
+                <div id="notif">
+                    <h2>{{ notif.to }}</h2>
+                    <h3>اعلامیه شماره {{ notif.id }}</h3>
+                    <p>{{ notif.message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

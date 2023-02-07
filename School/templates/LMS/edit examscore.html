@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+    .container_red {
+        margin-top: 20px;
+        margin-right: auto;
+        margin-left: auto;
+        position: relative;
+        width: 600px;
+        height: auto;
+        border-radius: 20px;
+        padding: 30px;
+        box-sizing: border-box;
+        background: #ffa6a6;
+        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+    }
+    </style>
+    {% if student_list %}
+        <div class="container_red">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>کاربر</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>اقدامات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in student_list %}
+                        <tr>
+                            <td>{{ student.user }}</td>
+                                {% for user in users %}
+                                    {% if user == student.user %}
+                                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            <td><a href="{{ student.user_id }}">ویرایش</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

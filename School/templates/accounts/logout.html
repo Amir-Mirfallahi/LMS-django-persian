@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        form {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+    </style>
+    {% if user.is_authenticated %}
+        <form action="" method="post"> {% csrf_token %}
+            <p>آیا میخواهید خارج شوید؟</p>
+            <button type="submit">بله، خارج شو</button>
+        </form>
+    {% else %}
+        <p>شما قبلا خارج شده اید. آیا میخواهید دوباره <a href="/login">وارد</a> شوید؟</p>
+    {% endif %}
+{% endblock %}
+{% block dont_use %}
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .container_green {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            width: 350px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #9cf7af;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        label, input, button {
+                font-family: Vazirmatn;
+                width: 100%;
+                padding: 0;
+                border: none;
+                outline: none;
+                box-sizing: border-box;
+        }
+
+        label {
+            margin-bottom: 4px;
+        }
+
+        label:nth-of-type(2) {
+            margin-top: 12px;
+        }
+
+        input::placeholder {
+            color: gray;
+        }
+
+        input {
+            direction: ltr;
+            background: #ecf0f3;
+            padding: 10px;
+            padding-left: 20px;
+            height: 50px;
+            font-size: 14px;
+            border-radius: 50px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+
+        button {
+            color: white;
+            margin-top: 20px;
+            background: #1DA1F2;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 900;
+            box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+            transition: 0.5s;
+        }
+        button:hover {
+            box-shadow: none;   
+        }
+        textarea {
+            font-family: Vazirmatn;
+            background: #ecf0f3;
+            padding: 10px;
+            border-radius: 50px;
+            border-top-right-radius: 0%;
+            padding-left: 20px;
+            font-size: 14px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+        .delete_btn {
+            background-color: #ab2c2c;
+        }
+        .delete_a:hover { background: none; }
+    </style>
+    <div class="container_green">
+        <form action="" method="post">{% csrf_token %}
+            <label>توضیحات: </label><br>
+            <textarea name="description" cols="30" rows="5">{{ description_value }}</textarea> <br>
+            <label>تاریخ: </label>
+            <input type="text" name="date" value="{{ date_value }}"><br>
+            <label>وضعیت: </label>
+            <select name="status">
+                {% if status_default %}
+                    <option value="True">گرفته شد</option>
+                    <option value="False">در انتظار</option>
+                {% else %}
+                    <option value="False">در انتظار</option>
+                    <option value="True">گرفته شد</option>
+                {% endif %}
+            </select><br>
+            <button type="submit">ایجاد تغییرات</button>
+        </form>
+        <a href="/account/manage-exams/{{ id }}/delete" class="delete_a"><button class="delete_btn">حذف</button></a>
+    </div>
+{% endblock %}

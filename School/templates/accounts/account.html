@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    <nav>
+        <div class="navicon">
+        <div></div>
+        </div>
+        <a href="/">خانه</a>
+        <a href="/logout">خروج از حساب</a>
+        {% if role == "Student" %}
+            <a href="/account/scores">نمرات</a>
+            <a href="/account/homeworks">تکالیف</a>
+            <a href="/account/exams">امتحانات</a>
+            <a href="/account/tickets">تیکت ها</a>
+        {% endif %}
+    
+        {% if role == "Teacher" %}
+            <a href="/account/manage-scores">مدیریت نمرات</a>
+            <a href="/account/manage-homeworks">مدیریت تکالیف</a>
+            <a href="/account/manage-exams">مدیریت امتحانات</a>
+            <a href="/account/tickets">تیکت ها</a>
+        {% endif %}
+        {% if user.is_superuser %}
+            <a href="/account/register">افزودن کاربر</a>
+            <a href="/admin">پنل مدیریت سایت</a>
+            <a href="/account/manage-tickets-notifs">مدیریت تیکت ها و اعلامیه ها</a>
+        {% endif %}
+    </nav>
+    
+{% endblock %}
+
+{% block content %}
+    <p>به صفحه مدیریت سایت خوش آمدید</p>
+    <br>
+    <p>شما میتوانید با زدن دکمه سه خط در سمت چپ به بخش های مختلف سایت بروید</p>
+    <ul>
+        <b>معلمان</b>
+        <li>قابلیت ویرایش نمرات</li>
+        <li>مدیریت تکالیف دانش آموزان</li>
+        <li>مدیریت امتحانات آینده</li>
+        <li>بارگزاری نمونه سوال (به زودی)</li>
+        <b>دانش آموزان</b>
+        <li>دیدن نمرات</li>
+        <li>دیدن تکالیف</li>
+        <li>دیدن برنامه امتحانات</li>
+        <li>گرفتن نمونه سوال (به زودی)</li>
+    </ul>
+{% endblock %}

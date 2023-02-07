@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .container_blue {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 30px;
+            width: 550px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #acbbff;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+    </style>
+    <div class="container_blue">
+        {% if exam_schedule %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>شماره آزمون</th>
+                        <th>نام درس</th>
+                        <th>زمان آزمون</th>
+                        <th>نمره</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exam in exam_schedule %}
+                        <tr>
+                            <td>{{ exam.id }}</td>
+                            <td>{{ exam.subject }}</td>
+                            <td>{{ exam.date }}</td>
+                            {% for exam_score in exam_scores %}
+                                {% if exam_score.exam_id.id == exam.id and exam_score.student.user == user %}
+                                    <td>{{ exam_score.exam_score }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>هیچ برنامه در حال حاضر وجود ندارد</p>
+        {% endif %}
+    </div>
+{% endblock %}

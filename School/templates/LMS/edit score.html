@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Vazirmatn');
+
+        input {
+            caret-color: red;
+        }
+
+
+        .container {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            width: 350px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #ecf0f3;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+
+        label, input, button {
+            font-family: Vazirmatn;
+            width: 100%;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        label {
+            margin-bottom: 4px;
+        }
+
+        label:nth-of-type(2) {
+            margin-top: 12px;
+        }
+
+        input::placeholder {
+            color: gray;
+        }
+
+        input {
+            direction: ltr;
+            background: #ecf0f3;
+            padding: 10px;
+            padding-left: 20px;
+            height: 50px;
+            font-size: 14px;
+            border-radius: 50px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+
+        button {
+            color: white;
+            margin-top: 20px;
+            background: #1DA1F2;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 900;
+            box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+            transition: 0.5s;
+        }
+        button:hover {
+            box-shadow: none;   
+        }
+    </style>
+    <div class="container">
+        <label>دانش آموز: {{ fullname }}</label>
+        <form action="" method="post"> {% csrf_token %}
+            <label>نمره: </label>
+            <br>
+            <input type="text" name="score" value="{{ last_score }}">
+            <br>
+            <label>موضوع: </label>
+            <select name="title">
+                <option value="semester1 mostamar">ترم اول تکوینی</option>
+                <option value="semester1">ترم اول نوبت</option>
+                <option value="semester1 exam">ترم اول پایانی</option>
+                <option value="semester2 mostamar">ترم دوم تکوینی </option>
+                <option value="semester2">ترم دوم نوبت</option>
+                <option value="semester2 exam">ترم دوم پایانی</option>
+            </select>
+            <button type="submit">ثبت</button>
+        </form>
+    </div>
+{% endblock %}

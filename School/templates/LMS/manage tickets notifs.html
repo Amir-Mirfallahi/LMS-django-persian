@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .container_blue {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 20px;
+            width: 620px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #acbbff;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .container_red {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 20px;
+            width: 700px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #ffb6c1;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        
+        .container_yellow {
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            margin-top: 20px;
+            width: 400px;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #ffffe0;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        textarea {
+            font-family: Vazirmatn;
+            background-color: #fffde7;
+            padding: 10px;
+            border-radius: 50px;
+            border-top-right-radius: 0%;
+            padding-left: 20px;
+            font-size: 14px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+        button {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+    <h3>{{ post }}</h3>
+    <div class="container_blue">
+        <h3>اعلامیه ها</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>شماره اعلامیه</th>
+                    <th>از کاربر</th>
+                    <th>برای</th>
+                    <th>پیام</th>
+                    <th>اقدامات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notif in notifications %}
+                    <tr>
+                        <td>{{ notif.id }}</td>
+                        <td>{{ notif.from_user }}</td>
+                        <td>{{ notif.to }}</td>
+                        <td>{{ notif.message }}</td>
+                        <td><a href="{{ notif.id }}/edit-notif">ویرایش</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container_red">
+        <h3>تیکت ها</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>شماره تیکت</th>
+                    <th>از کاربر</th>
+                    <th>پیام</th>
+                    <th>وضعیت</th>
+                    <th>پاسخ</th>
+                    <th>اقدامات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in support_tickets %}
+                    <tr>
+                        <td>{{ ticket.id }}</td>
+                        <td>{{ ticket.from_user.first_name }} {{ ticket.from_user.last_name }}</td>
+                        <td>{{ ticket.message }}</td>
+                        {% if ticket.status %}
+                            <td>پاسخ داده شده</td>
+                        {% else %}
+                            <td>در انتظار</td>
+                        {% endif %}
+                        {% if ticket.reply %}
+                            <td>{{ ticket.reply }}</td>
+                        
+                        {% else %}
+                            <td>ثبت نشده است</td>
+                        {% endif %}
+                        {% if ticket.reply %}
+                            <td><a href="{{ ticket.id }}/answer">ویرایش</a></td>
+                        {% else %}
+                            <td><a href="{{ ticket.id }}/answer">پاسخ</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container_yellow">
+        <h3>ساخت اعلامیه</h3>
+        <form action="" method="post">{% csrf_token %}
+            <label>برای: </label>
+            <select name="for">
+                <option value="همه کاربران">همه کاربران</option>
+                <option value="همه معلمان">همه معلمان</option>
+                <option value="همه دانش آموزان">همه دانش آموزان</option>
+            </select><br>
+            <label>پیام: </label><br>
+            <textarea name="message" style="resize: none;" cols="40" rows="10"></textarea><br>
+            <button type="submit">ثبت</button>
+        </form>
+    </div>
+{% endblock %}

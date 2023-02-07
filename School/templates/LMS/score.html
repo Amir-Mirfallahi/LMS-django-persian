@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .score_box {
+        margin-top: 20px;
+        margin-right: auto;
+        margin-left: auto;
+        position: relative;
+        width: 550px;
+        height: auto;
+        border-radius: 20px;
+        padding: 40px;
+        box-sizing: border-box;
+        background: #ecf0f3;
+        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+    }
+    </style>
+    {% if scores %}
+        <div class="score_box">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>نام و نام خانوادگی</th>
+                        <th>نام درس</th>
+                        <th>عنوان</th>
+                        <th>نمره</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for score in scores %}
+                        <tr>
+                            <td>{{ fullname }}</td>
+                            <td>{{ score.subject }}</td>
+                            {% if score.title == "semester1 mostamar" %}
+                                <td>تکوینی ترم اول</td>
+                                <td>{{ score.score }}</td>
+                            {% elif score.title == "semester1 exam" %}
+                                <td>پایانی ترم اول</td>
+                                <td>{{ score.score }}</td>
+                            {% elif score.title == "semester1" %}
+                                <td>نوبت اول</td>
+                                <td>{{ score.score }}</td>
+                            {% if score.title == "semester2 mostamar" %}
+                                <td>تکوینی ترم دوم</td>
+                                <td>{{ score.score }}</td>
+                            {% elif score.title == "semester2 exeam" %}
+                                <td>پایانی ترم دوم</td>
+                                <td>{{ score.score }}</td>
+                            {% elif score.title == "semester2" %}
+                                <td>نوبت دوم</td>
+                                <td>{{ score.score }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>متاسفانه نمراتی برای شما ثبت نشده اند</p>
+    {% endif %}
+{% endblock %}
