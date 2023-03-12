@@ -1,87 +1,29 @@
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شهدای فرهنگی</title>
+    <title>شهدای فرهنگی - {{ title }}</title>
 </head>
 <body>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Vazirmatn");
+        ::selection {
+            background-color: rgb(246, 174, 101);
+        }
         body {
             /* background-color: rgb(216, 227, 239); */
-            background-color: #add8e6;
+            background-color: #e4e4e4;
             font-family: Vazirmatn;
+            overflow-x: hidden;
             direction: rtl;
         }
-
-        nav {
-            width: 200px;
-            float: left;
-            text-align: right;
-            direction: ltr;
-            background: white;
-            color: rgba(0, 0, 0, 0.87);
-            -webkit-clip-path: circle(24px at 30px 24px);
-            clip-path: circle(24px at 32px 24px);
-            -webkit-transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
-            transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
-        }
-
-        nav:hover {
-            -webkit-transition-timing-function: ease-out;
-            transition-timing-function: ease-out;
-            -webkit-transition-duration: 0.75s;
-            transition-duration: 0.75s;
-            -webkit-clip-path: circle(390px at 225px 24px);
-            clip-path: circle(390px at 150px 24px);
-        }
-
         a {
             text-decoration: none;
-            display: block;
             line-height: 50px;
             padding: 0 20px;
-            color: inherit;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
         }
-
-        a:hover { background: #ffe082; }
-
-        a:active { background: #ffca28; }
-
-        .navicon {
-            padding: 23px 20px;
-            cursor: pointer;
-            -webkit-transform-origin: 32px 24px;
-            -ms-transform-origin: 32px 24px;
-            transform-origin: 32px 24px;
-        }
-
-        .navicon div {
-            position: relative;
-            width: 20px;
-            height: 2px;
-            background: rgba(0, 0, 0, 0.87);
-        }
-
-        .navicon div:before,
-        .navicon div:after {
-            display: block;
-            content: "";
-            width: 20px;
-            height: 2px;
-            background: rgba(0, 0, 0, 0.87);
-            position: absolute;
-        }
-
-        .navicon div:before { top: -7px; }
-
-        .navicon div:after { top: 7px; }
 
         button {
             font-family: Vazirmatn;
@@ -133,53 +75,93 @@
             color: #333;
             background-color: #fff;
         }
-        
-        header {
-            background-color: #f7d358;
-            text-align: center;
-            margin-bottom: 3px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        img {
-            height: 60px;
-            margin-right: 20px;
-        }
+        @import url('https://v1.fontapi.ir/css/IranNastaliq');
         .title {
-            font-size: 70pt;
+            font-size: 175%;
             color: #000000;
+            font-family: IranNastaliq;
         }
-        .back-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #333;
-            color: #fff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .header_navbar {
-            float: right;
-            text-align: right;
+        header {
+            background-color: #fff;
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
         }
-        .header_navbar:hover {
-            background-color: #c2dd28;
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header > a {
+            border: 2px solid navy;
+            border-radius: 15px;
+            transition: background-color 0.7s, color 0.5s;
+            margin: 15px;
+        }
+        .header > a:hover {
+            background-color: lightseagreen;
+            color: white;
+        }
+        .group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header input {
+            background-color: rgb(184, 184, 184);
+            font-family: Vazirmatn;
+            padding: 7px 5px;
+            width: 400px;
+            border: none;
+            box-shadow: 6px 6px 6px #cbced1;
             border-radius: 5px;
         }
+        .header form {
+            text-align: center;
+            margin-right: 5px;
+        }
+        .header button {
+            border: none;
+            padding: 5px;
+        }
+        @media only screen and (max-width: 600px) {
+            .header input {
+                width: 100px;
+            }
+            .title {
+                font-size: 80%;
+            }
+            .header a {
+                font-size: 15px;
+                padding: 3px;
+            }
+        }
+        
     </style>
     <header>
-        <h1 class="title">{{ title }}</h1>
-        {% block second_navbar %}
-            <a class="header_navbar" href="javascript:history.back()">صفحه قبل</a>
-            <a class="header_navbar" href="/">خانه</a>
-            <a class="header_navbar" href="/account/">حساب کاربری</a><br><br>
-        {% endblock %}
+        <div class="info" style="direction: ltr;">📞 011 54283021  <strong>@</strong> example@email.com</div>
+        <hr>
+        <div class="header">
+            <h1 class="title">دبیرستان هیت امنایی <br> شهدای فرهنگی</h1>
+            <form action="/search" method="get">
+                <input type="text" placeholder="جست و جو در مقالات و خبر ها" name="s">
+                <button type="submit">🔎</button>
+            </form>
+            {% block navbar %}
+                <a href="/">خانه</a>
+            {% endblock %}
+        </div>
     </header>
-    {% block navbar %}
-    
-    {% endblock %}
-  	<div class="section-center">
+    {% block header %}{% endblock %}
+  	<main>
         {% block content %}
         {% endblock %}
-  	</div>
+    </main>
 </body>
 </html>

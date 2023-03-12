@@ -7,6 +7,10 @@
             margin-right: auto;
             text-align: center;
         }
+        button {
+            line-height: 1.75;
+            padding: 0 5px;
+        }
     </style>
     {% if user.is_authenticated %}
         <form action="" method="post"> {% csrf_token %}

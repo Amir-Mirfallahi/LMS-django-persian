@@ -1,0 +1,36 @@
+{% extends 'account.html' %}
+
+{% block main %}
+    <style>
+        .container {
+            display: flex;
+            background-color: rgb(255, 255, 83);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px;
+            margin-top: 0;
+            flex-wrap: wrap;
+        }
+        .container > div {
+            background-color: greenyellow;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 5px;
+        }
+        .container a {
+            background-color: darksalmon;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+    <h4>زیرمحور ها</h4>
+    <div class="container">
+        {% for part in parts %}
+            <div class="part">
+                {{ part }} <br>
+                <a href="participate/{{ part }}">شرکت کردن</a>
+            </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}

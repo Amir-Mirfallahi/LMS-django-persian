@@ -1,0 +1,63 @@
+{% extends 'account.html' %}
+
+{% block main %}
+    <style>
+        .container {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 20px;
+            display: flex;
+            border-radius: 20px;
+            padding: 50px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #acbbff;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .festival {
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(255, 255, 83);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px;
+            margin-top: 0;
+            flex-wrap: wrap;
+        }
+        .festival label {
+            margin: 3px;
+        }
+        .festival a {
+            border: 2px solid darkorange;
+            padding: 0 10px;
+            color: black;
+            border-radius: 10px;
+            transition: background-color 0.7s, color 0.5s;
+            width: 97px;
+            margin-top: 5px;
+        }
+        .festival > a:hover {
+            background-color: darkgoldenrod;
+            color: white;
+        }
+        .group-2 {
+            margin-top: 30px;
+        }
+    </style>
+    <div class="container">
+        {% for festival in festivals %}
+            <div class="festival">
+                <label> جشنواره {{ festival.title }}</label>
+                <label>مهلت ثبت نام: {{ festival.until_date }}</label>
+                <a href="{{ festival.id }}">زیرمحور ها</a>
+            </div>
+        {% endfor %}
+    </div> 
+    <div class="group-2">
+        <h4>ثبت نام شده ها</h4>
+        {% for register in registered %}
+            <p>{{ register }}</p><br>
+        {% endfor %}
+    </div>
+{% endblock %}

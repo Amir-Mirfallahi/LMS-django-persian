@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "account.html" %}
 
-{% block content %}
+{% block main %}
     <style>
         .container_red {
             margin-right: auto;
@@ -27,7 +27,7 @@
             background: #acbbff;
             box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
         }
-        table {
+        .container_red table {
             border-collapse: collapse;
             margin-top: 20px;
             margin-left: auto;
@@ -36,7 +36,7 @@
             text-align: center;
 
         }
-        label, input, button {
+        .container_blue label, .container_blue input, .container_blue button {
             font-family: Vazirmatn;
             width: 100%;
             padding: 0;
@@ -45,19 +45,19 @@
             box-sizing: border-box;
         }
 
-        label {
+        .container_blue label {
             margin-bottom: 4px;
         }
 
-        label:nth-of-type(2) {
+        .container_blue label:nth-of-type(2) {
             margin-top: 12px;
         }
 
-        input::placeholder {
+        .container_blue input::placeholder {
             color: gray;
         }
 
-        input {
+        .container_blue input {
             direction: ltr;
             background: #ecf0f3;
             padding: 10px;
@@ -68,7 +68,7 @@
             box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
         }
 
-        button {
+        .container_blue  button {
             color: white;
             margin-top: 20px;
             background: #1DA1F2;
@@ -79,7 +79,7 @@
             box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
             transition: 0.5s;
         }
-        textarea {
+        .container_blue textarea {
             resize: none;
             font-family: Vazirmatn;
             background: #ecf0f3;
@@ -92,6 +92,37 @@
         }
         .delete_btn {
             background-color: #ab2c2c;
+        }
+        @media screen and (max-width: 550px) {
+            .container_blue {
+                width: 90%;
+            }
+            .container_blue textarea, select {
+                width: 100%;
+            }
+            .container_red {
+                width: 85%;
+            }
+            .container_red table {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+            }
+            th {
+                padding: 15px;
+            }
+            td {
+                padding: 5px;
+            }
+            .container_red tbody {
+                display: flex;
+                flex-direction: row;
+            }
+            .container_red tr {
+                display: flex;
+                flex-direction: column;
+            }
         }
     </style>
     {% if all_exam %}

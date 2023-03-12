@@ -6,12 +6,20 @@ from .views import (
         SelectClassStudent,
         manage_ticket_notification,
         edit_notification,
+        manage_festivals,
+        delete_festival,
         answer_support_ticket,
+        requests,
+        answer_request,
     #student
         student_score,
         student_homework,
         student_exam,
+        sample_exams,
         make_ticket,
+        festivals,
+        festival_parts,
+        participate_in_festival,
     #teacher
         manage_score,
         teacher_update_scores,
@@ -21,8 +29,9 @@ from .views import (
         delete_exam,
         edit_examScore,
         change_student_examscore,
+        manage_sample_exams,
+        delete_sample_exam,
         answer_ticket,
-
 )
 
 urlpatterns = [
@@ -33,6 +42,10 @@ urlpatterns = [
     path('manage-tickets-notifs/', manage_ticket_notification),
     path('manage-tickets-notifs/<int:id>/edit-notif/', edit_notification),
     path('manage-tickets-notifs/<int:id>/answer/', answer_support_ticket),
+    path('manage-festivals/', manage_festivals),
+    path('manage-festivals/<int:id>/delete', delete_festival),
+    path('requests/', requests),
+    path('requests/<int:id>', answer_request),
     # teachers views:
     path('manage-scores/', manage_score),
     path('manage-scores/<str:subject>/<str:student>/', teacher_update_scores),
@@ -41,11 +54,17 @@ urlpatterns = [
     path('manage-exams/<int:id>/edit/', edit_exam),
     path('manage-exams/<int:id>/scores/', edit_examScore),
     path('manage-exams/<int:id>/scores/<int:student_id>', change_student_examscore),
+    path('manage-sample-exams/', manage_sample_exams),
+    path('manage-sample-exams/<int:id>/delete/', delete_sample_exam),
     path('manage-exams/<int:id>/delete/', delete_exam),
     path('tickets/<int:id>/answer/', answer_ticket),
     # students views:
     path('scores/', student_score),
     path('homeworks/', student_homework),
     path('exams/', student_exam),
-    path('tickets/', make_ticket)
+    path('Sample-exams', sample_exams),
+    path('tickets/', make_ticket),
+    path('festivals/', festivals),
+    path('festivals/<int:id>/', festival_parts),
+    path('festivals/<int:id>/participate/<str:part>', participate_in_festival),
 ]

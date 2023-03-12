@@ -1,0 +1,51 @@
+{% extends "account.html" %}
+
+{% block main %}
+	<style>
+ 		.add-container {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 20px;
+            width: 30%;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #acbbff;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .add-container button {
+        	width: 100%;
+        }
+	</style>
+	{% if own_sample_exams %}
+		<table>
+			<thead>
+				<tr>
+					<th>شماره</th>
+					<th>درس</th>
+					<th>پایه</th>
+					<th>اقدامات</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for exam in own_sample_exams %}
+					<tr>
+						<td>{{ exam.id }}</td>
+						<td>{{ exam.subject }}</td>
+						<td>{{ exam.grade }}</td>
+						<td><a href="{{ exam.id }}/delete">حذف</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+	<div class="add-container">
+		<form method="POST">{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">ثبت</button>
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "account.html" %}
+
+{% block main %}
+	<style>
+		.container {
+			display: flex;
+			flex-wrap: wrap;
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            margin-top: 20px;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #acbbff;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .container > div {
+        	padding: 10px;
+        	margin-left: 10px;
+        	background-color: lightcoral;
+        	border-radius: 30px;
+        }
+        .container a {
+        	border-radius: 30px;
+        }
+	</style>
+	<div class="container">
+		{% for exam in sample_exams %}
+			<div>
+				<h3>نام درس: {{ exam.subject }}</h3>
+				<h4>نام طراح: آقای {{ exam.teacher.user.last_name }}</h4>
+				{% if exam.grade == "7" %}
+					<h3>برای پایه <strong>هفتم</strong></h3>
+				{% elif exam.grade == "8" %}
+					<h3>برای پایه <strong>هشتم</strong></h3>
+				{% elif exam.grade == "9" %}
+					<h3>برای پایه <strong>نمه</strong></h3>
+				{% endif %}
+				{% load static %}
+				<a class="btn btn-primary" href="{% static 'pdf' %}{{ exam.file.url }}" role="button" download>دانلود</a>
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock %}

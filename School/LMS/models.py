@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class Student(models.Model):
@@ -10,7 +11,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     class_subject = models.CharField(max_length=300)
-    
+
 class Score(models.Model):
     user = models.ForeignKey(Student, on_delete=models.CASCADE)
     choices = (
@@ -90,7 +91,7 @@ class Notification(models.Model):
         ('همه کاربران', 'همه کاربران'),
         ('همه معلمان', 'همه معلمان'),
         ('همه دانش آموزان', 'همه دانش آموزان'),
-        
+
     )
     to = models.CharField(choices=CHOICES, max_length=100)
     from_user = models.ForeignKey(User, models.CASCADE)
@@ -106,3 +107,37 @@ class SupportTicket(models.Model):
     message = models.TextField(max_length=600)
     status = models.BooleanField()
     reply = models.TextField(max_length=1000, null=True)
+class SampleExam(models.Model):
+    SUBJECTS = (
+        ('ریاضی', 'ریاضی'),
+        ('علوم', 'علوم'),
+        ('مطالعات اجتماعی', 'مطالعات اجتماعی'),
+        ('ادبیات فارسی', 'ادبیات فارسی'),
+        ('عربی', 'عربی'),
+        ('قرآن', 'قرآن'),
+        ('پیام های آسمان', 'پیام های آسمان'),
+        ('نگارش', 'نگارش'),
+        ('تفکر و سبک زندگی', 'تفکر و سبک زندگی'),
+        ('ورزش', 'ورزش'),
+        ('فرهنگ و هنر', 'فرهنگ و هنر'),
+        ('کار و فناوری', 'کار و فناوری'),
+        ('انگلیسی', 'انگلیسی')
+    )
+    GRADES = (
+        ('7', '7'),
+        ('8', '8'),
+        ('9', '9')
+    )
+    subject = models.CharField(max_length=50, choices=SUBJECTS)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    grade = models.CharField(max_length=5, choices=GRADES)
+    file = models.FileField(upload_to='static/pdf')
+
+class Request(models.Model):
+    user = models.ForeignKey(User, models.CASCADE)
+    title = models.TextField()
+    feedback = models.TextField()
+class Festival(models.Model):
+    title = models.CharField(max_length=200)
+    until_date = models.CharField(max_length=100)
+    parts = models.TextField(max_length=1000)

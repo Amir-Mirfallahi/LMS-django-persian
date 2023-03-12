@@ -1,0 +1,36 @@
+{% extends 'account.html' %}
+
+{% block main %}
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .container .request {
+            background-color: deepskyblue;
+            width: 20%;
+            padding: 20px;
+            border-radius: 17px;
+        }
+        .container .request a {
+            background-color: orange;
+            border-radius: 30px;
+            transition: background-color 1.75s;
+            color: black;
+        }
+        .container .request a:hover {
+            background-color: rgb(162, 250, 255);
+        }
+    </style>
+    <div class="container">
+        {% if requests %}
+            {% for request in requests %}
+                <div class="request"><p>{{ request.title }}</p><a href="{{ request.id }}">پاسخ دادن</a></div>
+            {% endfor %}
+        {% else %}
+            <p>هیچ درخواستی وجود ندارد.</p>
+        {% endif %}
+    </div>
+{% endblock %}

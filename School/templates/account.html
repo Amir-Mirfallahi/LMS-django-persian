@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% if text %}
+        <div class="text"><p>{{ text }}</p></div>
+    {% endif %}
+    <style>
+        .sidebar {
+            background-color: #F5EAEA;
+            box-shadow: 10px 10px 10px #829795;
+            width: 20%;
+            border-radius: 20px;
+            padding: 7px;
+            padding-top: 20px;
+            padding-bottom: 7px;
+            margin-left: 1%;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar > a {
+            display: flex;
+            width: 90%;
+            white-space: nowrap;
+            margin: 3px;
+            color: #2b392d;
+            transition: background-color 0.7s, color 0.7s;
+            border-radius: 10px;
+
+        }
+        .sidebar > a:hover {
+            border-radius: 10px;
+            color: black;
+            background-color: #FFB84C;
+        }
+        .main {
+            background-color: aqua;
+            width: 80%;
+        }
+        .main-container {
+            display: flex;
+            padding: 10px;
+            justify-content: center;
+        }
+        .sidebar {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        }
+        .sidebar .icon {
+            display: none;
+        }
+        @media screen and (max-width: 600px) {
+            .sidebar a:not(:first-child) {display: none;}
+            .sidebar a.icon {
+                display: block;
+                background-color: transparent;
+                margin: 0;
+                width: 20px;
+            }
+            .sidebar {
+                width: 50px;
+                padding: 0 0px;
+                margin-bottom: 10px;
+
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .sidebar.responsive {position: relative; width: 250px;}
+            .sidebar.responsive .icon {
+                position: relative;
+                background-color: transparent;
+                padding: 0 20px;
+                right: 0;
+                top: 0;
+            }
+            .sidebar.responsive a {
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <div class="main-container">
+        <div class="sidebar" id="sidebar">
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <p class="fa fa-bars">☰</p>
+            </a>
+            {% if role == "Student" %}
+                <a href="/account/scores">نمرات</a>
+                <a href="/account/homeworks">تکالیف</a>
+                <a href="/account/exams">امتحانات</a>
+                <a href="/account/Sample-exams">نمونه سوالات</a>
+                <a href="/account/festivals/">جشنواره ها</a>
+                <a href="/account/tickets">تیکت ها</a>
+            {% endif %}
+            {% if role == "Teacher" %}
+                <a href="/account/manage-scores">مدیریت نمرات</a>
+                <a href="/account/manage-homeworks">مدیریت تکالیف</a>
+                <a href="/account/manage-exams">مدیریت امتحانات</a>
+                <a href="/account/manage-sample-exams/">نمونه سوالات</a>
+                <a href="/account/tickets">تیکت ها</a>
+            {% endif %}
+            {% if user.is_superuser %}
+                <a href="/account/register">افزودن کاربر</a>
+                <a href="/account/manage-festivals/">مدیریت جشنواره ها</a>
+                <a href="/account/requests/">درخواست ها</a>
+                <a href="/account/manage-tickets-notifs">مدیریت تیکت ها و اعلامیه ها</a>
+            {% endif %}
+            <a href="/logout">خارج از حساب</a>
+            
+        </div>
+        
+        <script>
+            function myFunction() {
+                var x = document.getElementById("sidebar");
+                if (x.className === "sidebar") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "sidebar";
+                }
+            }
+        </script>
+        <style>
+            .main {
+                border-radius: 10px;
+                background-color: #ccffdd;
+                box-shadow: 3px 5px 5px #afafaf;
+                display: flex;
+                padding: 10px;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+            }
+            .card {
+                background-color: crimson;
+                width: 60%;
+                height: 80%;
+                display: flex;
+                padding: 15px;
+                border-radius: 10px 15px 13px 14px;
+            }
+            .col-1 {
+                background-color: #FFB84C;
+                padding: 10px 10px;
+                width: 40%;
+            }
+            .col-2 {
+                background-color: cornflowerblue;
+                padding: 10px 10px;
+                color: white;
+                width: 60%;
+            }
+            .col-2 p {
+                font-size: 100%;
+            }
+            .text {
+                padding: 20px;
+                right: 5px;
+                width: fit-content;
+                border-radius: 20px;
+                border-top-right-radius: 0%;
+                background-color: rgb(199, 255, 116);
+                top: 10px;
+                margin: 10px;
+                animation: text 6s;
+                opacity: 0;
+            }
+            @keyframes text {
+                0% {opacity: 0;display: block;}
+                15% {opacity: 100%;display: block;}
+                90% {opacity: 100%;display: block;}
+                100% {opacity: 0;display: none;}
+            }
+        </style>
+
+        <div class="main" style="position: relative;">
+            {% block main %}
+                
+                <h4>اطلاعات شناسایی</h4><br>
+                <div class="card">
+                    <div class="col-1">
+                        سلام جناب <b>{{ user.last_name }}</b>.
+                        خوش آمدید!
+                    </div>
+                    <hr>
+                    <div class="col-2">
+                        <p>یک متن از مدرسه در اینجا قرار دارد </p>
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

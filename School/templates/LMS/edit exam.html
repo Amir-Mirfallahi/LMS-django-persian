@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "account.html" %}
 
-{% block content %}
+{% block main %}
     <style>
         .container_green {
             margin-right: auto;
@@ -14,7 +14,7 @@
             background: #9cf7af;
             box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
         }
-        label, input, button {
+        .container_green label, .container_green input, .container_green button {
                 font-family: Vazirmatn;
                 width: 100%;
                 padding: 0;
@@ -23,19 +23,19 @@
                 box-sizing: border-box;
         }
 
-        label {
+        .container_green label {
             margin-bottom: 4px;
         }
 
-        label:nth-of-type(2) {
+        .container_green label:nth-of-type(2) {
             margin-top: 12px;
         }
 
-        input::placeholder {
+        .container_green input::placeholder {
             color: gray;
         }
 
-        input {
+        .container_green input {
             direction: ltr;
             background: #ecf0f3;
             padding: 10px;
@@ -46,7 +46,7 @@
             box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
         }
 
-        button {
+        .container_green button {
             color: white;
             margin-top: 20px;
             background: #1DA1F2;
@@ -57,10 +57,10 @@
             box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
             transition: 0.5s;
         }
-        button:hover {
+        .container_green button:hover {
             box-shadow: none;   
         }
-        textarea {
+        .container_green textarea {
             font-family: Vazirmatn;
             background: #ecf0f3;
             padding: 10px;
@@ -74,6 +74,21 @@
             background-color: #ab2c2c;
         }
         .delete_a:hover { background: none; }
+        @media screen and (max-width: 600px) {
+            .container_green {
+                width: 70%;
+                font-size: 80%;
+            }
+            .container_green textarea {
+                width: 100%;
+                height: 30%;
+                border-radius: 20px;
+                border-top-right-radius: 0;
+            }
+            .container_green select {
+                width: 100%;
+            }
+        }
     </style>
     <div class="container_green">
         <form action="" method="post">{% csrf_token %}

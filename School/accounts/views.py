@@ -25,4 +25,11 @@ def account(request):
         role = Profile.objects.filter(user=request.user)[0].role
     else:
         role = "superuser"
-    return render(request, 'accounts/account.html', {"title": 'حساب کاربری', "role": role})
+    context = {
+        'title': 'حساب کاربری',
+        'role': role,
+    }
+    if request.GET.get('text'):
+        text = request.GET.get('text')
+        context['text'] = text
+    return render(request, 'account.html', context)

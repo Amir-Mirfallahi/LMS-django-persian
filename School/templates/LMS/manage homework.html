@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "account.html" %}
 
-{% block content %}
+{% block main %}
     <style>
         .container {
             margin-right: auto;
@@ -14,8 +14,8 @@
             background: #ecf0f3;
             box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
         }
-
-        label, input, button {
+        
+        .container label, .container input, .container button {
             font-family: Vazirmatn;
             width: 100%;
             padding: 0;
@@ -24,19 +24,19 @@
             box-sizing: border-box;
         }
 
-        label {
+        .container label {
             margin-bottom: 4px;
         }
 
-        label:nth-of-type(2) {
+        .container label:nth-of-type(2) {
             margin-top: 12px;
         }
 
-        input::placeholder {
+        .container input::placeholder {
             color: gray;
         }
 
-        input {
+        .container input {
             direction: ltr;
             background: #ecf0f3;
             padding: 10px;
@@ -47,7 +47,7 @@
             box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
         }
 
-        button {
+        .container button {
             color: white;
             margin-top: 20px;
             background: #1DA1F2;
@@ -58,10 +58,10 @@
             box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
             transition: 0.5s;
         }
-        button:hover {
+        .container button:hover {
             box-shadow: none;   
         }
-        textarea {
+        .container textarea {
             font-family: Vazirmatn;
             background: #ecf0f3;
             padding: 10px;
@@ -71,9 +71,25 @@
             font-size: 14px;
             box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
         }
-        h3 {
+        .container h3 {
             text-align: center;
         }
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 70%;
+                font-size: 80%;
+            }
+            .container textarea {
+                width: 100%;
+                height: 30%;
+                border-radius: 20px;
+                border-top-right-radius: 0;
+            }
+            .container select {
+                width: 100%;
+            }
+        }
+        
     </style>
     <h3><b>افزودن تکلیف</b></h3>
     <div class="container">

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .forms import RegisterForm, NotifcationForm
+from .forms import UserCreationForm, NotifcationForm, SampleExamForm
 from .models import *
 
 # Create your views here.
@@ -11,16 +11,22 @@ def role_check(user, role):
             return True
         else:
             return False
+def get_user_role(request):
+    if Profile.objects.filter(user=request.user):
+        return Profile.objects.filter(user=request.user)[0].role
+    else:
+        return "superuser"
 # These are code for admin of site
 def register_user_admin(request):
     all_user = User.objects.all()
     all_profile = Profile.objects.all()
-    form = RegisterForm(request.POST or None)
+    form = UserCreationForm(request.POST or None)
     context = {
         "title": "افزودن کاربر",
         "users": all_user,
         "profiles": all_profile,
         "form": form,
+        'role': get_user_role(request)
     }
     if form.is_valid():
         username = request.POST['username']
@@ -49,7 +55,7 @@ def SelectClassTeacher(request):
             if i.username == request.GET['user']:
                 user = i
         Teacher.objects.create(user=user, class_subject=request.POST['class_subject'])
-        redirect('/account/register')
+        redirect('/account/register/')
     return render(request, 'LMS/teacher class.html', {"title": "انتخاب کلاس و درس"})
 def SelectClassStudent(request):
     for i in User.objects.all():
@@ -67,6 +73,7 @@ def manage_ticket_notification(request):
         'title': 'مدیریت تیکت ها',
         'notifications': Notification.objects.all(),
         'support_tickets': SupportTicket.objects.all(),
+        'role': get_user_role(request),
     }
     if request.method == 'POST':
         for_users = request.POST.get('for')
@@ -78,6 +85,7 @@ def answer_support_ticket(request, id):
     context = {
         'title': f'پاسخ تیکت: {id}',
         'ticket_id': id,
+        'role': get_user_role(request),
     }
     if SupportTicket.objects.filter(id=id)[0].status:
         context['last_answer'] = SupportTicket.objects.filter(id=id)[0].reply
@@ -98,7 +106,8 @@ def edit_notification(request, id):
     context = {
         'title': 'ویرایش اعلامیه',
         'id': id,
-        'form': form
+        'form': form,
+        'role': get_user_role(request),
     }
     return render(request, 'LMS/edit notif.html', context)
 # Teacher view are here
@@ -109,7 +118,8 @@ def manage_score(request):
     context = {
         'title': 'مدیریت نمرات',
         'users': User.objects.all(),
-        'scores': Score.objects.all()
+        'scores': Score.objects.all(),
+        'role': get_user_role(request),
     }
     teacher_info = Teacher.objects.filter(user=request.user) or False
     if teacher_info:
@@ -119,8 +129,11 @@ def manage_score(request):
         context['class_choices'] = class_choices2
         if request.GET.get('class_subject_choice'):
             class_subject_choice = request.GET.get('class_subject_choice')
+            print(class_subject_choice)
             clas = class_subject_choice[:2]
+            print(clas)
             subject = class_subject_choice[3:]
+            print(subject)
             students_list = Student.objects.filter(grade=clas[0], clas=clas.upper()[1])
             context['teacher_subject'] = subject
             context['teacher_class'] = subject
@@ -158,6 +171,7 @@ def teacher_update_scores(request, student, subject):
     context = {
         'title': 'ویرایش',
         'fullname': User.objects.filter(username=student)[0].get_full_name(),
+        'role': get_user_role(request),
     }
     return render(request, 'LMS/edit score.html', context)
 # student scores
@@ -166,6 +180,7 @@ def student_score(request):
         'title': 'نمرات',
         'fullname': User.objects.filter(username=request.user)[0].get_full_name(),
         'scores': Score.objects.filter(user=Student.objects.filter(user=request.user)[0]),
+        'role': get_user_role(request),
     }
     return render(request, 'LMS/score.html', context)
 
@@ -186,7 +201,8 @@ def manage_homework(request):
     context = {
         'title': 'مدیریت تکالیف',
         'homeworks': Homework.objects.filter(teacher=Teacher.objects.filter(user=request.user)[0]),
-        'class_subject': class_subjects
+        'class_subject': class_subjects,
+        'role': get_user_role(request),
     }
     # get teacher's object
     if request.method == "POST":
@@ -209,6 +225,7 @@ def student_homework(request):
     context = {
         'title': 'تکالیف',
         'homeworks': homeworks,
+        'role': get_user_role(request),
     }
     return render(request, 'LMS/homeworks.html', context)
 
@@ -230,6 +247,7 @@ def manage_exam(request):
         'title': 'مدیریت امتحانات',
         'all_exam': Exam.objects.all() or False,
         'teacher_classes': teacher_classes,
+        'role': get_user_role(request),
     }
     return render(request, 'LMS/manage exams.html', context)
 def delete_exam(request, id):
@@ -247,6 +265,7 @@ def edit_exam(request, id):
         'description_value': Exam.objects.filter(id=id)[0].descriptions,
         'date_value': Exam.objects.filter(id=id)[0].date,
         'id': id,
+        'role': get_user_role(request),
     }
     return render(request, 'LMS/edit exam.html', context)
 
@@ -259,13 +278,15 @@ def edit_examScore(request, id):
         'title': 'ثبت نمرات دانش آموزان',
         'student_list': student_list,
         'users': User.objects.all(),
+        'role': get_user_role(request),
     }
     return render(request, 'LMS/edit examscore.html', context)
 def change_student_examscore(request, id, student_id):
     context = {
         'title': 'ویرایش نمره',
         'exam_id': id,
-        'student_id': student_id
+        'student_id': student_id,
+        'role': get_user_role(request),
     }
     for exam_score in ExamScore.objects.all():
         if int(exam_score.exam_id.id) == int(id) and int(exam_score.student.user_id) == int(student_id):
@@ -293,17 +314,18 @@ def student_exam(request):
     context = {
         'title': 'امتحانات',
         'exam_schedule': exam_schecdule,
-        'exam_scores': ExamScore.objects.all()
+        'exam_scores': ExamScore.objects.all(),
+        'role': get_user_role(request),
     }
     return render(request, 'LMS/exams.html', context)
 # make a ticekt for students and teachers
 def make_ticket(request):
-    role = Profile.objects.filter(user=request.user)[0].role
+    role = get_user_role(request)
     context = {
         'title': 'تیکت ها',
         'private_tickets': PrivateTicket.objects.filter(from_user=request.user),
         'support_tickets': SupportTicket.objects.filter(from_user=request.user),
-        'role': role,
+        'role': get_user_role(request),
     }
     if role == "Student":
         teachers = []
@@ -330,6 +352,7 @@ def answer_ticket(request, id):
     context = {
         'title': f'پاسخ تیکت: {id}',
         'ticket_id': id,
+        'role': get_user_role(request),
     }
     if PrivateTicket.objects.filter(id=id)[0].status:
         context['last_answer'] = PrivateTicket.objects.filter(id=id)[0].reply
@@ -338,3 +361,108 @@ def answer_ticket(request, id):
         PrivateTicket.objects.filter(id=id).update(status=True, reply=answer)
         return redirect('/account/tickets/')
     return render(request, 'LMS/answer ticket.html', context)
+
+# manage Sample exams for teachers
+def manage_sample_exams(request):
+    own_sample_exams = SampleExam.objects.filter(teacher__user=request.user)
+    form = SampleExamForm(request.POST or None, request.FILES or None)
+    if request.method == "POST":
+        subject = request.POST.get('subject')
+        teacher = Teacher.objects.filter(user=request.user)[0]
+        grade = request.POST.get('grade')
+        file = request.POST.get('file')
+        SampleExam.objects.create(subject=subject, teacher=teacher, grade=grade, file=file)
+        return redirect('/account/manage-sample-exams')
+    context = {
+        'title': 'مدیریت نمونه سوال ها',
+        'own_sample_exams': own_sample_exams,
+        'form': form,
+        'role': get_user_role(request),
+    }
+    return render(request, 'LMS/manage sample exam.html', context)
+
+def delete_sample_exam(request, id):
+    if not role_check(request.user, 'Teacher'):
+        return redirect('/account/')
+    SampleExam.objects.filter(id=id).delete()
+    return redirect('/account/manage-sample-exams/')
+
+# get exam scores
+def sample_exams(request):
+    context = {
+        'title': 'نمونه سوال ها',
+        'sample_exams': SampleExam.objects.all(),
+        'role': get_user_role(request),
+    }
+    return render(request, 'LMS/smaple exams.html', context)
+
+# students festivals:
+def festivals(request):
+    registered = []
+    for r in Request.objects.filter(user=request.user):
+        if r.title.rfind('جشنواره') != -1:
+            v = int(r.title.rfind('جشنواره') + 8)
+            registered.append(r.title[v:r.title.rfind('،')])
+            
+    context = {
+        'title': 'جشنواره ها',
+        'role': get_user_role(request),
+        'festivals': Festival.objects.all(),
+        'registered': registered,
+    }
+    return render(request, 'LMS/festivals.html', context)
+def festival_parts(request, id):
+    parts = Festival.objects.filter(id=id)[0].parts.split('، ')
+    context = {
+        'title': 'جشنواره ها',
+        'parts': parts,
+        'role': get_user_role(request),
+    }
+    return render(request, 'LMS/festival parts.html', context)
+def participate_in_festival(request, id, part):
+    festival = Festival.objects.filter(id=id)[0].title
+    Request.objects.create(user=request.user, title=f'با سلام. کاربر {request.user} با نام {request.user.first_name} و نام خانوادگی {request.user.last_name} میخواهد در جشنواره {festival} در محور {part}، شرکت کند.')
+    return redirect('/account/?text=با موفقیت ثبت نام شدید.')
+# admin manage festivals
+def manage_festivals(request):
+    context = {
+        'title': 'مدیریت جشنواره ها',
+        'role': get_user_role(request),
+        'festivals': Festival.objects.all(),
+    }
+    if request.method == "POST":
+        title = request.POST.get('title')
+        until_date = request.POST.get('until_date')
+        parts = request.POST.get('parts')
+        if title and until_date and parts:
+            Festival.objects.create(title=title, until_date=until_date, parts=parts)
+            redirect('/account/manage-festivals/')
+    return render(request, 'LMS/manage festivals.html', context)
+def delete_festival(request, id):
+    Festival.objects.filter(id=id).delete()
+    return redirect('/account/manage-festivals/')
+# admin requests
+def requests(request):
+    request_qs = Request.objects.all()
+    context = {
+        'title': 'درخواست ها',
+        'requests': request_qs,
+        'role': get_user_role(request),
+    }
+    return render(request, 'LMS/requests.html', context)
+
+def answer_request(request, id):
+    if Request.objects.filter(id=id)[0].feedback:
+        feedback = Request.objects.filter(id=id)[0].feedback
+    else:
+        feedback = False
+    if not feedback:
+        if request.method == 'POST':
+            Request.objects.update(id=id, feedback=request.POST.get('feedback'))
+            return redirect('/account/?text=با موفقیت ثبت شد')
+    context = {
+        'title': 'درخواست ها',
+        'role': get_user_role(request),
+        'feedback': feedback,
+    }
+    return render(request, 'LMS/answer request.html', context)

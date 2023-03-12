@@ -1,0 +1,151 @@
+{% extends 'account.html' %}
+
+{% block main %}
+    <style>
+        .festivals {
+            position: relative;
+            margin-top: 20px;
+            display: flex;
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #acffb2;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .add-festival {
+            position: relative;
+            margin-top: 20px;
+            display: flex;
+            width: 30%;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #acbbff;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .add-festival button {
+            width: 100%;
+        }
+        .add-festival form {
+            display: flex;
+            flex-direction: column;
+        }
+        .add-festival label, .add-festival input{
+            font-family: Vazirmatn;
+            width: 100%;
+            direction: rtl;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .add-festival label {
+            margin-bottom: 4px;
+        }
+
+        .add-festival label:nth-of-type(2) {
+            margin-top: 12px;
+        }
+
+        .add-festival input::placeholder {
+            color: gray;
+        }
+
+        .add-festival input {
+            background: #ecf0f3;
+            padding: 10px;
+            padding-left: 20px;
+            height: 50px;
+            width: 100%;
+            font-size: 14px;
+            border-radius: 50px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+
+
+        .add-festival textarea {
+            font-family: Vazirmatn;
+            background: #ecf0f3;
+            padding: 10px;
+            position: relative;
+            border-radius: 50px;
+            border-top-right-radius: 0%;
+            padding-left: 20px;
+            font-size: 14px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+            width: 242px;
+            height: 213px;
+        }
+        @media screen and (max-width: 550px) {
+            
+            .add-festival {
+                width: 85%;
+            }
+            .add-festival textarea {
+                width: 100%;
+            }
+            .festivals table {
+                border: none;
+            }
+            .festivals {
+                width: 90%;
+            }
+            th {
+                padding: 5px;
+                text-align: center;
+                font-size: 7pt;
+            }
+            td {
+                padding: 5px;
+                text-align: center;
+                font-size: 7pt;
+            }
+        }
+    </style>
+    {% if festivals %}
+        <div class="festivals">
+            <table>
+                <thead>
+                    <tr>
+                        <th>نام جشنواره</th>
+                        <th>مهلت ثبت نام</th>
+                        <th>زیر محور ها</th>
+                        <th>اقدامات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for festival in festivals %}
+                        <tr>
+                            <td>{{ festival.title }}</td>
+                            <td>{{ festival.until_date }}</td>
+                            <td>{{ festival.parts }}</td>
+                            <td><a href="{{ festival.id }}/delete">حذف</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="festivals"><p>هیچ جشنواره ای ساخته نشده است</p></div>
+    {% endif %}
+    <div class="add-festival">
+        <form action="" method="post">{% csrf_token %}
+            <label>نام جشنواره: </label>
+            <input type="text" name="title">
+            <label>مهلت ثبت نام: </label>
+            <input type="text" name="until_date">
+            <label>زیر محورها: </label>
+            <textarea name="parts"></textarea>
+            <button type="submit" style="height: 20%;">ثبت</button>
+        </form>
+    </div>
+{% endblock %}

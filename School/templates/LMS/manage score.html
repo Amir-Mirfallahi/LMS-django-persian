@@ -1,51 +1,27 @@
-{% extends "base.html" %}
+{% extends "account.html" %}
 
-{% block content %}
+{% block main %}
 <style>
-    @import url('https://fonts.googleapis.com/css?family=Vazirmatn');
-
-input {
-    caret-color: red;
-}
-
-
 .container {
     margin-right: auto;
     margin-left: auto;
     position: relative;
-    width: 350px;
+    width: 40%;
     height: auto;
+    font-size: 110%;
     border-radius: 20px;
     padding: 40px;
     box-sizing: border-box;
     background: #ecf0f3;
     box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
 }
-
-.brand-logo {
-    height: 100px;
-    width: 100px;
-    background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Entetsu_logo_w.svg/322px-Entetsu_logo_w.svg.png?20180806173846");
-    margin: auto;
-    border-radius: 50%;
-    box-sizing: border-box;
-    box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px white;
+@media screen and (max-width: 600px) {
+    .container {
+        width: 70%;
+        font-size: 80%;
+    }
 }
-
-.brand-title {
-    margin-top: 10px;
-    font-weight: 900;
-    font-size: 1.8rem;
-    color: #1DA1F2;
-    letter-spacing: 1px;
-}
-
-.inputs {
-    text-align: right;
-    margin-top: 30px;
-}
-
-label, input, button {
+.container label, .container input, .container button {
     font-family: Vazirmatn;
     width: 100%;
     padding: 0;
@@ -53,31 +29,37 @@ label, input, button {
     outline: none;
     box-sizing: border-box;
 }
+.container input[type="radio"] {
+    width: auto;
+    height: auto;
+    box-shadow: none;
+}
 
-label {
+.container label {
     margin-bottom: 4px;
 }
 
-label:nth-of-type(2) {
+.container label:nth-of-type(2) {
     margin-top: 12px;
 }
 
-input::placeholder {
+.container input::placeholder {
     color: gray;
 }
 
-input {
+.container input {
     direction: ltr;
     background: #ecf0f3;
     padding: 10px;
     padding-left: 20px;
     height: 50px;
+    caret-color: red;
     font-size: 14px;
     border-radius: 50px;
     box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
 }
 
-button {
+.container button {
     color: white;
     margin-top: 20px;
     background: #1DA1F2;
@@ -88,7 +70,7 @@ button {
     box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
     transition: 0.5s;
 }
-button:hover {
+.container button:hover {
     box-shadow: none;   
 }
 

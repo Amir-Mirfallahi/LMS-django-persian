@@ -1,0 +1,58 @@
+{% extends 'account.html' %}
+
+{% block main %}
+    <style>
+        .container-a {
+            position: relative;
+            margin-top: 20px;
+            display: flex;
+            width: 35%; 
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: auto;
+            border-radius: 20px;
+            padding: 40px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            background: #acffb2;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .container-a button {
+            width: 100%;
+        }
+        .container-a form {
+            display: flex;
+            flex-direction: column;
+        }
+        .container-a textarea {
+            font-family: Vazirmatn;
+            background: #ecf0f3;
+            padding: 10px;
+            position: relative;
+            border-radius: 50px;
+            border-top-right-radius: 0%;
+            padding-left: 20px;
+            font-size: 14px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+            width: 242px;
+            height: 213px;
+        }
+        @media screen and (max-width: 550px) {
+            
+            .container-a {
+                width: 85%;
+            }
+            .container-a textarea {
+                width: 100%;
+            }
+        }
+    </style>
+    <div class="container-a">
+        <form action="" method="post">{% csrf_token %}
+            <label>پاسخ: </label>
+            <textarea name="feedback">{{ feedback }}</textarea>
+            <button type="submit">ثبت</button>
+        </form>
+    </div>
+{% endblock %}

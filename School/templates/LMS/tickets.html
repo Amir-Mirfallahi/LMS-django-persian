@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "account.html" %}
 
-{% block content %}
+{% block main %}
     <style>
         .container {
             margin-right: auto;
@@ -42,7 +42,7 @@
             box-sizing: border-box;
             box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
         }
-        textarea {
+        .container textarea {
             font-family: Vazirmatn;
             background-color: #fffde7;
             padding: 10px;
@@ -53,10 +53,10 @@
             box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
             resize: none;
         }
-        button {
+        .container button {
             width: 60%;
         }
-        table, tr {
+        .container table, .container tr {
             border-radius: 20px;
         }
     </style>

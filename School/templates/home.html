@@ -1,57 +1,88 @@
 {% extends "base.html" %}
-{% block navbar %}
+    
+{% block header %}
     <style>
-        header {
-            height: 32%;
+        .about {
+            bottom: 10px;
+            white-space: nowrap;
+            opacity: 0;
+            margin-right: 2%;
+            animation: about 7s linear;
+            animation-iteration-count: 2;
         }
-        .notifications {
-            margin-right: auto;
-            margin-left: auto;
-            position: relative;
-            float: right;
-            width: 380px;
-            margin-top: 2%;
-            height: auto;
-            border-radius: 20px;
-            padding: 40px;
-            box-sizing: border-box;
-            background: #72acd8;
-            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
-        }
-        #notif {
-            margin-left: auto;
-            position: relative;
-            width: 300px;
-            margin-top: 2%;
-            height: auto;
-            border-radius: 20px;
-            padding: 20;
-            box-sizing: border-box;
-            background: #ffb6c1;
-        }
-        .notification-header {
-            color: white;
+        @keyframes about {
+            0% {
+                transform: translate(20%);
+                opacity: 100%;
+            }
+            90% {opacity: 100%;}
+            100% {
+                opacity: 0;
+                transform: translate(-100%);
+            }
         }
     </style>
-        <nav>
-            <div class="navicon">
-            <div></div>
-            </div>
-            <a href="/">خانه</a>
-            {% if not user.is_authenticated %}
-                <a href="/login">ورود</a>
-            {% else %}
-                <a href="/account">حساب کاربری</a>
-            {% endif %}
-        </nav>
+    <hr>
+    <div class="about">
+        <p>اطلاعات مدرسه در اینجا نمایش داده میشوند</p>
+    </div>
 {% endblock %}
-{% block second_navbar %}{% endblock %}
+{% block navbar %}
+    {% if user.is_authenticated %}
+        <a href="/account">حساب کاربری</a>
+    {% else %}
+        <a href="/login">ورود به سامانه</a>
+    {% endif %}
+{% endblock %}
 {% block content %}
+<style>
+    .notifications {
+        margin-right: auto;
+        margin-left: auto;
+        position: relative;
+        float: right;
+        width: 380px;
+        margin-top: 2%;
+        height: auto;
+        border-radius: 20px;
+        padding: 40px;
+        box-sizing: border-box;
+        background: #72acd8;
+        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+    }
+    .notif {
+        margin-left: auto;
+        position: relative;
+        width: 300px;
+        margin-top: 2%;
+        height: auto;
+        border-radius: 20px;
+        padding: 20;
+        box-sizing: border-box;
+        background: #ffb6c1;
+    }
+    .notification-header {
+        color: white;
+    }
+    main {
+        padding: 0 25px;
+    }
+</style>
+    {% load static %}
+    <div class="col-1">
+
+    </div>
+    <div class="col-2">
+        
+    </div>
+    <div class="col-3">
+
+    </div>
     {% if notifications %}
+        <h2 class="notification-header">اعلامیه ها</h2>
         <div class="notifications">
-            <h2 class="notification-header">اعلامیه ها</h2>
             {% for notif in notifications %}
-                <div id="notif">
+                <div class="notif">
                     <h2>{{ notif.to }}</h2>
                     <h3>اعلامیه شماره {{ notif.id }}</h3>
                     <p>{{ notif.message }}</p>
