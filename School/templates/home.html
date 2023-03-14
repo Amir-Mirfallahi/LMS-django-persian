@@ -23,9 +23,11 @@
         }
     </style>
     <hr>
-    <div class="about">
-        <p>اطلاعات مدرسه در اینجا نمایش داده میشوند</p>
-    </div>
+    {% block information%}
+        <div class="about">
+            <p>اطلاعات مدرسه در اینجا نمایش داده میشوند</p>
+        </div>
+    {% endblock %}
 {% endblock %}
 {% block navbar %}
     {% if user.is_authenticated %}
@@ -37,57 +39,121 @@
 {% block content %}
 <style>
     .notifications {
-        margin-right: auto;
-        margin-left: auto;
-        position: relative;
-        float: right;
-        width: 380px;
-        margin-top: 2%;
+        width: 100%;
         height: auto;
-        border-radius: 20px;
-        padding: 40px;
-        box-sizing: border-box;
-        background: #72acd8;
-        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
-    }
-    .notif {
-        margin-left: auto;
-        position: relative;
-        width: 300px;
-        margin-top: 2%;
-        height: auto;
-        border-radius: 20px;
-        padding: 20;
-        box-sizing: border-box;
-        background: #ffb6c1;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
     }
     .notification-header {
-        color: white;
+        border-right: 7px solid rgb(187, 41, 41);
+        padding-right: 5px;
+    }
+    .col-1 {
+        width: 69%;
+        height: fit-content;
+    }
+    .col-2 {
+        width: 29%;
+        background-color: white;
+        padding: 5px;
+        border-radius: 5px;
+        padding-bottom: 0;
+        height: fit-content;
+    }
+    
+    .notif {
+        margin-top: 2%;
+        height: auto;
+        padding: 20;
+        box-sizing: border-box;
     }
     main {
         padding: 0 25px;
+        display: flex;
+        justify-content: space-between;
     }
+    .col-1 img {
+        width: 100%;
+    }
+    .posts h3 {
+        border-right: 7px solid rgb(41, 187, 46);
+        padding-right: 5px;
+    }
+    .posts {
+        display: flex;
+        flex-direction: column;
+    }
+    .posts a {
+        transition: transform 1s;
+    }
+    .posts a:hover {
+        transform: scale(1.15, 1.15);
+    }
+    .school-img img {
+        height: 400px;
+        border-radius: 12px;
+        box-shadow: 5px 5px 5px #888;
+    }
+    @media screen and (max-width: 500px) {
+        main {
+            flex-direction: column;
+        }
+        .col-1 {
+            width: 100%;
+        }
+        .col-2 {
+            width: 100%;
+        }
+        .notif h2, .notif h3, .notif p {
+            font-size: 80%;
+        }
+        .school-img img {
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        .notif h3 {
+            font-size: 70%
+        }
+        .notif p {
+            font-size: 50%
+        }
+        .posts h3 {
+            font-size: 70%;
+        }
+        .posts a {
+            font-size: 60%;
+        }
+    }
+    
 </style>
     {% load static %}
-    <div class="col-1">
-
+    <div class="col-1">{% load static %}
+        {% block homec1 %}
+            <div class="school-img"><img src="{% static 'school.png' %}" alt="school-logo"></div>
+        {% endblock %}
     </div>
     <div class="col-2">
-        
+        {% if posts %}
+            <div class="posts">
+                <h3>نوشته های تازه</h3>
+                {% for post in posts %}
+                    <a href="/posts/{{ post.slug }}" style="color: black;">{{ post.title }}</a>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if notifications %}
+            <h2 class="notification-header">اعلامیه ها</h2>
+            <div class="notifications">
+                {% for notif in notifications %}
+                    <div class="notif">
+                        <h2>{{ notif.to }}</h2>
+                        <h3>اعلامیه شماره {{ notif.id }}</h3>
+                        <p>{{ notif.message }}</p>
+                    </div><hr>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
-    <div class="col-3">
 
-    </div>
-    {% if notifications %}
-        <h2 class="notification-header">اعلامیه ها</h2>
-        <div class="notifications">
-            {% for notif in notifications %}
-                <div class="notif">
-                    <h2>{{ notif.to }}</h2>
-                    <h3>اعلامیه شماره {{ notif.id }}</h3>
-                    <p>{{ notif.message }}</p>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
 {% endblock %}

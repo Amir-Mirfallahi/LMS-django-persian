@@ -1,0 +1,15 @@
+{% extends 'home.html' %}
+
+{% block information %}
+{% endblock %}
+{% block homec1 %}
+    <div class="col-1">
+        <div class="post-retrieve">
+            <div><h1>{{ post.title }}</h1></div>
+            <hr>
+            <div><p>{{ post.content|linebreaks }}</p></div>
+            <br>
+            <div><p>{{ uploaded_time }}</p></div>
+        </div>
+    </div>
+{% endblock %}

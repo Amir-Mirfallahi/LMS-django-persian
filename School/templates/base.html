@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'pre-logo.png' %}" type="image/x-icon">
     <title>شهدای فرهنگی - {{ title }}</title>
 </head>
 <body>
@@ -108,6 +109,16 @@
             background-color: lightseagreen;
             color: white;
         }
+        .menu > a {
+            border: 2px solid #999999;
+            border-radius: 15px;
+            transition: background-color 0.7s, color 0.5s;
+            margin: 15px;
+        }
+        .menu > a:hover {
+            background-color: #FFC300;
+            color: white;
+        }
         .group {
             display: flex;
             align-items: center;
@@ -130,6 +141,10 @@
             border: none;
             padding: 5px;
         }
+        .info a {
+            padding: 0;
+            color: #000000;
+        }
         @media only screen and (max-width: 600px) {
             .header input {
                 width: 100px;
@@ -145,7 +160,7 @@
         
     </style>
     <header>
-        <div class="info" style="direction: ltr;">📞 011 54283021  <strong>@</strong> example@email.com</div>
+        <div class="info" style="direction: ltr;">📞 <a href="tel:+9801154283021">011 54283021</a><strong>@</strong><a href="mailto:shfarhangi@email.com">shfarhangi@email.com</a></div>
         <hr>
         <div class="header">
             <h1 class="title">دبیرستان هیت امنایی <br> شهدای فرهنگی</h1>
@@ -156,6 +171,10 @@
             {% block navbar %}
                 <a href="/">خانه</a>
             {% endblock %}
+        </div>
+        <div class="menu">
+            <a href="/about-us">درباره ما</a>
+            <a href="/contact-us">تماس با ما</a>
         </div>
     </header>
     {% block header %}{% endblock %}

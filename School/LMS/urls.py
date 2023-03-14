@@ -11,6 +11,9 @@ from .views import (
         answer_support_ticket,
         requests,
         answer_request,
+        admin_post,
+        edit_post,
+        delete_post,
     #student
         student_score,
         student_homework,
@@ -46,6 +49,9 @@ urlpatterns = [
     path('manage-festivals/<int:id>/delete', delete_festival),
     path('requests/', requests),
     path('requests/<int:id>', answer_request),
+    path('posts/', admin_post),
+    path('posts/<int:id>/edit', edit_post),
+    path('posts/<int:id>/delete', delete_post),
     # teachers views:
     path('manage-scores/', manage_score),
     path('manage-scores/<str:subject>/<str:student>/', teacher_update_scores),

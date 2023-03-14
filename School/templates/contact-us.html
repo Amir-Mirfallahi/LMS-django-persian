@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+
+{% block information %}{% endblock %}
+{% block homec1 %}
+    <style>
+        .container {
+            border-radius: 13px;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #ecf0f3;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        .phone {
+            display: block;
+        }
+        .container a  {
+            padding: 0;
+            color: #000000;
+        }
+        .phone img, .email img {
+            transform: translatey(10px);
+        }
+    </style>
+    {% load static %}
+    <div class="container">
+        <div class="address"><h4>نشانی: </h4><p>مازندران، تنکابن، خیابان ابراهیم دلیر کوهی</p></div>
+        <div class="phone">
+            <img src="{% static 'phone.ico' %}" style="width: fit-content;" alt="phone-icon">
+            <a href="tel:+981154283021" style="direction: ltr;align-self: flex-start;">011 54283021</a>
+        </div>
+        <div class="email">
+            <img src="{% static 'email.ico' %}" style="width: fit-content;" class="em" alt="mail-icon">
+            <a href="mailto:shfarhangi@email.com">shfarhangi@email.com</a>
+        </div>
+    </div>
+{% endblock %}

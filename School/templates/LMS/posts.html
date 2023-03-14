@@ -1,0 +1,128 @@
+{% extends 'account.html' %}
+
+{% block main %}
+    <style>
+        .posts {
+            background-color: coral;
+            display: flex;
+            flex-wrap: wrap;
+            width: 50%;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .post {
+            background: linear-gradient(180deg,#00b386 40%,#e4e4e4 0);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 0 5px;
+        }
+        .post a {
+            background-color: #00b386;
+            padding: 5px;
+            border-radius: 10px;
+            color: white;
+            width: 100%;
+            transition: background-color 1s;
+        }
+        .post a:hover {
+            background-color: coral;
+        }
+    </style>
+    {% if posts %}
+        <div class="posts">
+            {% for post in posts %}
+                <div class="post">{{ post.title }} <br> <a href="{{ post.id }}/edit">ویرایش</a> </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <style>
+        .add-post {
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            width: 75%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 20px;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #ecf0f3;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+        
+        .add-post label, .add-post input, .add-post button {
+            font-family: Vazirmatn;
+            width: 100%;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .add-post label {
+            margin-bottom: 4px;
+        }
+
+        .add-post label:nth-of-type(2) {
+            margin-top: 12px;
+        }
+        .add-post input {
+            background: #ecf0f3;
+            padding: 10px;
+            padding-right: 20px;
+            height: 50px;
+            font-size: 14px;
+            border-radius: 50px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+
+        .add-post button {
+            color: white;
+            margin-top: 20px;
+            background: #1DA1F2;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 900;
+            box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+            transition: 0.5s;
+        }
+        .add-post button:hover {
+            box-shadow: none;   
+        }
+        .add-post textarea {
+            font-family: Vazirmatn;
+            background: #ecf0f3;
+            padding: 10px;
+            width: 100%;
+            height: 400px;
+            border-radius: 50px;
+            border-top-right-radius: 0%;
+            padding-left: 20px;
+            font-size: 14px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+        @media screen and (max-width: 600px) {
+            .add-post {
+                width: 70%;
+                font-size: 80%;
+            }
+            .add-post textarea {
+                width: 100%;
+                height: 30%;
+                border-radius: 20px;
+                border-top-right-radius: 0;
+            }
+        }
+    </style>
+    <div class="add-post">
+        <p style="color: #00b386;text-align: center;">ساخت نوشته</p>
+        <form action="" method="post">{% csrf_token %}
+            <label>موضوع: </label>
+            <input type="text" name="title">
+            <label>متن: </label>
+            <textarea name="content" cols="30" rows="10" placeholder="متن نوشته شما..."></textarea>
+            <button type="submit">ثبت</button>
+        </form>
+    </div>
+{% endblock %}

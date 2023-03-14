@@ -1,3 +1,6 @@
+{% load static %}
+<link rel="shortcut icon" href="{% static 'pre-logo.png' %}" type="image/x-icon">
+
 {% if not request.user.is_authenticated %}
     <style>
         @import url('https://fonts.googleapis.com/css?family=Vazirmatn');

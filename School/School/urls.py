@@ -6,7 +6,11 @@ from accounts.views import (
     account,
 )
 from .views import (
-    home
+    home,
+    retreive_post,
+    about_us,
+    contact_us,
+    search,
 )
 
 urlpatterns = [
@@ -14,6 +18,10 @@ urlpatterns = [
     path('', home),
     path("login/", login_view),
     path('logout/', logout_view),
+    path('posts/<str:slug>', retreive_post),
+    path('search/', search),
     path('account/', account),
+    path('about-us', about_us),
+    path('contact-us', contact_us),
     path('account/', include('LMS.urls'))
 ]

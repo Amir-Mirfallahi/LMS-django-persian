@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .forms import UserCreationForm, NotifcationForm, SampleExamForm
+from .forms import UserCreationForm, NotifcationForm, SampleExamForm, PostForm
 from .models import *
 
 # Create your views here.
@@ -466,3 +466,35 @@ def answer_request(request, id):
         'feedback': feedback,
     }
     return render(request, 'LMS/answer request.html', context)
+
+# adming make a post
+def admin_post(request):
+    posts = Post.objects.all()
+    context = {
+        'title': 'نوشته ها',
+        'posts': posts
+    }
+    if request.method == "POST":
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        slug = request.POST.get('title').replace(' ', '-')
+        if title and content:
+            Post.objects.create(title=title, content=content, slug=slug)
+            return redirect('/account/posts/')
+    return render(request, 'LMS/posts.html', context)
+
+def edit_post(request, id):
+    post_id = Post.objects.get(id=id)
+    form = PostForm(data=request.POST or None, instance=post_id)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect('/account/posts/')
+    context = {
+        'title': 'نوشته ها',
+        'form': form
+    }
+    return render(request, 'LMS/edit post.html', context)
+def delete_post(request, id):
+    Post.objects.get(id=id).delete()
+    return redirect('/account/posts/')

@@ -1,0 +1,49 @@
+{% extends 'home.html' %}
+
+{% block homec1 %}
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 15px;
+        }
+        .post {
+            display: flex;
+            flex-direction: column;
+        }
+        .post a {
+            background-color: orange;
+            color: white;
+            border-radius: 5px;
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.7s;
+            width: 20%;
+            border-radius: 20px;
+            font-weight: 900;
+            box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+        }
+        .post a:hover {
+            background-color: rgb(255, 47, 0);
+        }
+        .post {
+            border: 2px solid rgb(255, 132, 0);
+            border-radius: 20px;
+        }
+    </style>
+    <div class="container">
+        {% for post in related_post_content %}
+            <div class="post">
+                <h2>{{ post.title }}</h2>
+                <a href="/posts/{{ post.slug }}">ادامه مطلب</a>
+            </div>
+        {% endfor %}
+        {% for post in related_post_title %}
+            <div class="post">
+                <h2>{{ post.title }}</h2>
+                <a href="/posts/{{ post.slug }}">ادامه مطلب</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
